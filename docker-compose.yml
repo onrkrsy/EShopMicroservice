@@ -1,0 +1,39 @@
+﻿services:
+  eshop.mongo.db.catalog:
+    image: mongo:8.0-rc
+    container_name: eshop.mongo.db.catalog
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${USERNAME} #burayı computer name alıyor docker exec'te env | grep MONGO çağırırsak görebiliyoruz ismi'
+      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
+    ports:
+      - "27030:27017"
+    volumes:
+      - eshop_mongo_catalog_data:/data/db
+  eshop.mongo.db.catalog.ui:
+    image: mongo-express:1.0.2-20-alpine3.19
+    container_name: eshop.mongo.db.catalog.ui
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${USERNAME}:${PASSWORD}@eshop.mongo.db.catalog:27017/
+      ME_CONFIG_BASICAUTH: false
+  eshop.rabbitmq:
+    restart: always
+    image: rabbitmq:3.13.7-management
+    container_name: eshop.rabbitmq
+    ports:
+      - 5672:5672  
+      - 15672:15672 
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: Password12
+    volumes:
+      - eshop_rabbitmq_data:/var/lib/rabbitmq  
+volumes:
+  eshop_mongo_catalog_data:
+  eshop_rabbitmq_data:
+  

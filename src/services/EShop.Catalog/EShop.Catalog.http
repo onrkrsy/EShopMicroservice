@@ -1,0 +1,87 @@
+@EShop.Catalog_HostAddress = http://localhost:5050/api/v1
+
+@productId = d89e0000-45b7-e0d0-0e08-08dcd27225be
+@userId=1
+@categoryId=d89e0000-45b7-e0d0-efa8-08dcd27225bd
+
+
+### Get All Categories
+GET {{EShop.Catalog_HostAddress}}/categories
+Accept: application/json
+
+###
+
+### Get Category By Id
+GET {{EShop.Catalog_HostAddress}}/categories/{{categoryId}}
+Accept: application/json
+
+###
+
+### Create Category
+POST {{EShop.Catalog_HostAddress}}/categories
+Content-Type: application/json
+
+{
+  "name": "New Category",
+  "description": "This is a new category"
+}
+
+###
+
+
+### Get Course By Id
+GET {{EShop.Catalog_HostAddress}}/products
+Accept: application/json
+
+###
+
+### Get Course By Id
+GET {{EShop.Catalog_HostAddress}}/products/{{productId}}
+Accept: application/json
+
+###
+
+### Get Courses By User Id
+GET {{EShop.Catalog_HostAddress}}/products/user/{{userId}}
+Accept: application/json
+
+###
+
+### Create Course
+POST {{EShop.Catalog_HostAddress}}/products
+Content-Type: application/json
+
+{
+  "name": "New",
+  "description": "This is a new product",
+  "price": 99.99,
+  "picture": "http://example.com/picture.jpg",
+  "userId": "user123",
+  "categoryId": "{{categoryId}}"
+
+}
+
+###
+
+### Update Course
+PUT {{EShop.Catalog_HostAddress}}/products
+Content-Type: application/json
+
+{
+  "id": "{{productId}}",
+  "name": "Updated Course",
+  "description": "This is an updated product",
+  "price": 79.99,
+  "picture": "http://example.com/updated_picture.jpg",
+  "userId": "user123",
+  "categoryId": "{{categoryId}}",
+  "duration": 150
+}
+
+###
+
+### Delete Course
+DELETE {{EShop.Catalog_HostAddress}}/products/{{productId}}
+Accept: application/json
+
+###
